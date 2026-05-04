@@ -1,0 +1,59 @@
+paths:
+  # Laisser null pour éviter tout chemin absolu codé en dur.
+  # Priorité runtime: CLI > variables d'environnement > ce YAML > auto-détection.
+  project_root: null
+  checkpoints_dir: "checkpoints"
+  data_dir: "data"
+  output_dir: "outputs"
+
+  # Ces fichiers sont résolus relativement à data_dir s'ils ne sont pas absolus.
+  pokemon_data_csv: "pokemon_data.csv"
+  tcg_cards_csv: "pokemon-tcg-data-master 1999-2023.csv"
+
+models:
+  # Ces fichiers sont résolus relativement à checkpoints_dir s'ils ne sont pas absolus.
+  ctgan_full: "ctgan_model_full.pt"
+  ctgan_generator_state: "generator_state.pt"
+  vae: "vae_final.pt"
+  latent_diffusion: "latent_diffusion_last.pt"
+
+generators:
+  # Remplacer ces valeurs suffit pour brancher un autre générateur.
+  # Exemple: name: "name:transformer" après avoir créé/importé le plugin.
+  name: "name:random"
+  stats: "stats:ctgan"
+  attacks: "attacks:csv"
+  image: "image:latent_diffusion"
+
+plugins: []
+
+runtime:
+  device: "auto"
+  seed: 42
+
+image_generator:
+  enabled: true
+  image_size: 64
+  latent_channels: 4
+  vae_base_channels: 64
+  diff_base_channels: 128
+  diff_timesteps: 300
+  diff_objective: "v"
+  ddim_steps: 100
+  eta: 0.20
+  temperature: 1.12
+  guidance_scale: 0.0
+  allowed_types: ["Fire", "Water", "Grass", "Electric"]
+
+stats_generator:
+  enabled: true
+  max_attempts_for_type: 64
+
+attacks_generator:
+  enabled: true
+  count: 2
+
+renderer:
+  width: 744
+  height: 1038
+  font_path: null

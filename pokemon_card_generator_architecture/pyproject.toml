@@ -1,0 +1,23 @@
+[project]
+name = "pokecardgen"
+version = "0.1.1"
+description = "Architecture modulaire pour générer des cartes Pokémon custom par type."
+requires-python = ">=3.10"
+dependencies = [
+  "torch",
+  "torchvision",
+  "pandas",
+  "numpy",
+  "Pillow",
+  "PyYAML",
+  "ctgan"
+]
+
+[project.scripts]
+pokecardgen = "pokecardgen.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+pokecardgen = ["configs/*.yaml"]
